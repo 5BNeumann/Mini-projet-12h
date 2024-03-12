@@ -1,0 +1,366 @@
+%Préambule du document :
+\documentclass[a4paper, 9pt]{article}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry} 
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{graphicx}
+\usepackage{color}   
+\usepackage{hyperref}
+\usepackage{caption} 
+\usepackage[]{Raf_Notations_Torseurs}
+\usepackage{pgfgantt}
+\usepackage{rpcinematik}
+\usepackage{pdfpages}
+\usepackage{listings}
+\usepackage{xcolor} 
+\definecolor{listinggray}{gray}{0.9}
+\definecolor{lbcolor}{rgb}{0.9,0.9,0.9}
+\definecolor{Darkgreen}{rgb}{0,0.4,0}
+\lstset{
+	backgroundcolor=\color{lbcolor},
+	tabsize=4,    
+	%   rulecolor=,
+	language=[GNU]C++,
+	basicstyle=\scriptsize,
+	upquote=true,
+	aboveskip={1.5\baselineskip},
+	columns=fixed,
+	showstringspaces=false,
+	extendedchars=false,
+	breaklines=true,
+	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+	frame=single,
+	numbers=left,
+	showtabs=false,
+	showspaces=false,
+	showstringspaces=false,
+	identifierstyle=\ttfamily,
+	keywordstyle=\color[rgb]{0,0,1},
+	commentstyle=\color[rgb]{0.026,0.112,0.095},
+	stringstyle=\color[rgb]{0.627,0.126,0.941},
+	numberstyle=\color[rgb]{0.205, 0.142, 0.73},
+	%        \lstdefinestyle{C++}{language=C++,style=numbers}’.
+}
+\lstset{
+	backgroundcolor=\color{lbcolor},
+	tabsize=4,
+	language=C++,
+	captionpos=b,
+	tabsize=3,
+	frame=lines,
+	numbers=left,
+	numberstyle=\tiny,
+	numbersep=5pt,
+	breaklines=true,
+	showstringspaces=false,
+	basicstyle=\footnotesize,
+	%  identifierstyle=\color{magenta},
+	keywordstyle=\color[rgb]{0,0,1},
+	commentstyle=\color{Darkgreen},
+	stringstyle=\color{red}
+}
+
+\begin{document}
+
+
+% configuration des couleurs pour le GANTT
+\definecolor{bartermine}{RGB}{38,252,186}
+\definecolor{barnontermine}{RGB}{245,69,28}
+\definecolor{barvert}{RGB}{154,230,55}
+\definecolor{barnonterminegroupe}{RGB}{252,202,73}
+\definecolor{colorsoustache}{RGB}{252,202,73}
+\definecolor{groupblue}{RGB}{88,123,245}
+\definecolor{linkred}{RGB}{245,69,28}
+\definecolor{colorsoustache}{RGB}{252,202,73}
+%\renewcommand\sfdefault{phv}
+%\renewcommand\mddefault{mc}
+%\renewcommand\bfdefault{bc}
+\setganttlinklabel{s-s}{START-TO-START}
+\setganttlinklabel{f-s}{FINISH-TO-START}
+\setganttlinklabel{f-f}{FINISH-TO-FINISH}
+%\sffamily
+
+
+\begin{center} % Page de présentation
+
+	
+	\textsc{\huge\textbf{{Mini projet de 12h\\}}}
+	\vspace{.5cm}
+	\textsc{\Large	{Du\\}}
+	\vspace{.5cm}
+	\textsc{\Large	{Lycée François RABELAIS de Chinon\\}}
+	\vspace{.5cm}
+	\textsc{\large	{Sciences de l'ingénieur}}
+	
+	\vspace{.5cm}
+	
+	\large{\textit	{Présenté par}}\\
+	
+    \bigskip
+	
+	\huge{\textbf	{Meriadek \textsc{ACKERMANN}\\					
+					\bigskip
+					Louane \textsc{PROVOST}\\
+					\bigskip
+					Loïs \textsc{DURENDEAU}\\
+					\bigskip
+					Colin \textsc{FARAULT}\\
+					\bigskip
+					Antony \textsc{MIRIBEL}\\
+					\bigskip
+					Ronan \textsc{BOUTELOUP}}}\\				
+				
+					\vspace{.5cm}
+					
+	\textit{\large{	Thème: Aéronautique\\						
+					Support: Gouverne de profondeur}}							
+				
+	\vspace{.15cm}
+	\rule{250pt}{0.3mm}\\
+	
+	\bigskip
+
+	\Large{\textbf{Problématique : Comment créer une maquette de gouverne de profondeur fonctionnelle avec un retour utilisateur sur écran?}}\\	
+	\vspace{.3cm}
+	\includegraphics[scale=.3]{illustration}\\	
+	
+	\vspace{.15cm}
+	\rule{250pt}{0.3mm}\\
+	\vspace{.15cm}
+	
+	\textit{\large{Réalisé le 12 mars 2024}}				
+	
+	\vspace{0.15cm}
+	
+	\textit{\large{Encadré par :}}\\
+	\vspace{.25cm}
+	\Large{	\textsc{Mr Guibert} : Professeur de génie électrique}
+    	
+
+\end{center}
+
+%Corps du document :
+\newpage
+	\tableofcontents
+\newpage
+
+\section{Organisation du projet}
+\subsection{Cahier des charges}
+\tiny{~}\\
+\normalsize-La carte doit être alimentée en USB et l'alimentation de la carte arduino\\
+-La gouverne doit être déplacée par le servo moteur\\
+-Le système doit être protégé des court circuits\\
+-Les matériaux doivent provenir du laboratoire de Science de L'Ingénieur\\
+-La programmation devra être effectuée en C sur une carte arduino\\
+-Les matériaux devront respecter du mieux que possible l'environnement\\
+-Des informations seront affichée en temps réel via un écran LCD\\
+-L'angle d'incidence de l'empanage horizontale doit être obtenable via un potentiomètre\\
+\subsection{Gantt}
+\begin{ganttchart}[
+%Configuration du gantt
+    canvas/.append style={fill=none, draw=black!5, line width=.75pt},
+    hgrid style/.style={draw=black!5, line width=.75pt},
+    vgrid={*1{draw=black!5, line width=.75pt}},
+% réglage bar today
+%    today=0,
+%    today rule/.style={
+%      draw=black!64,
+%      dash pattern=on 3.5pt off 4.5pt,
+%      line width=1.5pt
+%    },
+    today label font=\small\bfseries,
+    title/.style={draw=none, fill=none},
+    title label font=\bfseries\footnotesize,
+    title label node/.append style={below=7pt},
+    include title in canvas=false,
+    bar label font=\mdseries\small\color{colorsoustache},
+    bar label node/.append style={left=2cm},
+    bar/.append style={draw=none, fill=bartermine},
+    bar incomplete/.append style={fill=barnonterminegroupe},
+    bar progress label font=\mdseries\footnotesize\color{black!70},
+    group incomplete/.append style={fill=barnontermine},
+    group/.append style={draw=none, fill=bartermine},
+    group left shift=0,
+    group right shift=0,
+    group height=.5,
+    group peaks tip position=0,
+    group label node/.append style={left=.6cm},
+    group progress label font=\bfseries\small,
+    link/.style={-latex, line width=1.5pt, linkred},
+    link label font=\scriptsize\bfseries,
+    link label node/.append style={below left=-2pt and 0pt}
+  ]{1}{23}
+  \gantttitle[
+    title label node/.append style={below left=7pt and -3pt}
+  ]{JOURS:\quad9}{1}
+  \gantttitlelist{10,...,31}{1} \\
+  
+%Partie 1 du gantt  
+  \ganttgroup[progress=100]{Partie 1: Système électrique}{1}{1} \\
+  \ganttbar[
+    progress=100,
+    name=WBS1B
+  ]{\textbf{\footnotesize{Création du schéma}}}{1}{1} \\[grid]
+ 
+%Partie 2 du gantt
+  \ganttgroup[progress=100]{Partie 2 : Mécanique}{1}{23} \\
+  \ganttbar[progress=100]{\textbf{\footnotesize{Prise des mesures}}}{1}{8} \\
+  \ganttbar[progress=100]{\textbf{\footnotesize{Calcul des dimensions}}}{1}{1} \\
+  \ganttbar[progress=100]{\textbf{\footnotesize{Modélisation 3D}}}{1}{23} \\
+ 
+  
+%Partie 3 du gantt
+	\ganttgroup[progress=90]{Partie 3 : Code}{15}{23}\\
+	\ganttbar[progress=90]{\textbf{\footnotesize{Création du C++}}}{15}{23} \\
+	
+%Partie 4 du gantt
+  \ganttgroup[progress=80]{Partie 4 : Rendu}{10}{23} \\
+  \ganttbar[progress=100]{\textbf{\footnotesize{Présentation orale}}}{4}{5} \\
+  \ganttbar[progress=60]{\textbf{\footnotesize{Dossier}}}{6}{8} \\
+
+
+
+\end{ganttchart}
+\newpage
+
+
+\section{Schémas \& mise en plan 3d}
+	\subsection{Schéma cinématique}
+		\begin{center}
+			\begin{tikzpicture}[very thick]
+				\draw[color=red!60] (0.5,0) -- (0.5,-1);
+				\draw[color=red!60] (3.5,0) -- (3.5,-1);
+				\draw[color=red!60] (0,-0.5) -- (5,-0.5);
+				\draw[color=blue!60](1,0) -- (3,0);
+				\draw[color=blue!60] (1,-1) -- (3,-1);
+				\draw[color=blue!60] (2,1) -- (2,0);
+				\draw[color=red!60] (4.5,0.5) -- (5.5,0.5) (5,0.5) -- (5,-1.5) (4.5,-1.5) -- (5.5,-1.5);
+				\draw[color=barvert!60] (4.5,-1.53) -- (5.5,-1.53) (5,-1.53) -- (5,-3.5) (4.5,-3.5) -- (5.5,-3.5) (5, -2.5) -- (10,-2.5) (6.5,-2) -- (6.5,-3) (9.5,-2) -- (9.5,-3);
+				\draw[color=black!60] (7,-2) -- (9,-2) (7,-3) -- (9,-3) (8,-3) -- (8,-5);
+				\draw[color=blue!60] (6,-5.5) -- (10,-5.5) (6.5,-5) -- (6.5, -6) (9.5, -5) -- (9.5,-6);
+				\draw[color=black!60] (7,-5) rectangle (9,-6);
+				\draw[color=black, -stealth] (5,-2.5) -- (5, -0.5);
+				\node at (5.2,-0.5) (nodez) {z};
+				\draw[color=black, -stealth] (5,-2.5) -- (3, -2.5);
+				\node at (3,-2.3) (nodey) {y};
+			\end{tikzpicture}
+		\end{center}
+	\subsection{Schéma électrique}
+		\includegraphics[scale=.4]{schema-electrique}\\
+	\newpage
+	\includepdf[scale=.8, pagecommand=\subsection{Mise en plan 3d}]{Empanage-horizontal}
+		
+\newpage
+
+\section{Programmation}
+\subsection{Code C++}
+\begin{lstlisting}[language=c++]
+	#include <LiquidCrystal.h>   //Importation des bibliotheques necessaires au code
+	#include <Servo.h>
+	const int POTENTIOMETRE_PIN = A0;           //Declaration du pin du potentiometre/joystick
+	const int INCLINAISON_PIN = A1;         //Declaration du pin du potentiometre/gyroscope 
+	const float DIVIDER_POT_DEGRES = 3.777778;  //Initialisation de la valeur pour la convertion de la valeur potentiometre en degree
+	const int SERVO_PIN = 8;                    //Declaration du pin du servomoteur
+	float ordreProfondeur  = 0;                 //Variable pour gerer l'angle du servomoteur
+	int anglePotentiometre;                  //Variable de l'angle du potentiometre
+	Servo servo;
+	// Initialisation des pins de l'ecran lcd (different du cours)
+	const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
+	LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+	//Setup
+	void setup() {	
+		InitialiseLCD();	
+		//Initialise le moniteur serie à la vitesse de 9600 bauds
+		Serial.begin(9600);
+		//Le servo est sur le pin 8
+		servo.attach(8);
+	}
+	//Main
+	void loop() {
+		//Affichage des courbes pour debugger
+		AffichageTraceurSerie();
+		//Affiche les informations sur l'ecran
+		AfficheInfosLCD();
+		//Le servo bouge en fonction de la position du joystick
+		servo.write(PositionServoDepuisOrdreDegre(ordreProfondeur));
+		OrdreProfondeur();
+		//Attente de 50 msec
+		delay(50);
+	}
+	int PositionServoDepuisOrdreDegre(float degre) {
+		int result round(90+(degre*180/270));
+		if(result<0) result = 0;
+		if(result>180) result = 180;
+		return result;	
+	}
+	//Initialisation de l'ecran LCD
+	void InitialiseLCD() {	
+		//Ecran de 20 colonnes x 4 lignes
+		lcd.begin(20, 4);
+		lcd.setCursor(0, 0);
+		lcd.print("joystick :");
+		lcd.setCursor(0, 1);
+		lcd.print("incidence :");
+		lcd.setCursor(0, 3);
+		lcd.print("ordre servo :");
+	}
+	// Affichage des ordres et mesures et du resultat sur le servo
+	void AfficheInfosLCD() {
+		float incidenceDegre= LitPinEnDegre(POTENTIOMETRE_PIN);
+		float inclinaisonDegre = LitPinEnDegre(INCLINAISON_PIN);
+		//affichage de l'incidence demandee sur la commande de profondeur
+		lcd.setCursor(13, 0);
+		lcd.print("       ");
+		lcd.setCursor(13, 0);
+		lcd.print(incidenceDegre);
+		//affichage de l'inclinaison mesuree par le joystick (gyroscope)
+		lcd.setCursor(13, 1);
+		lcd.print("       ");
+		lcd.setCursor(13, 1);
+		lcd.print(inclinaisonDegre);
+		//affichage de l'ordre envoye au servo
+		lcd.setCursor(14, 3);
+		lcd.print("      ");
+		lcd.setCursor(14, 3);
+		lcd.print(PositionServoDepuisOrdreDegre(ordreProfondeur));
+	}
+	//Determine l'ordre actuel sur la profondeur : soit +X, soit -X
+	float OrdreProfondeur() {
+		//Lit le joystick
+		float ordre = LitPinEnDegre(POTENTIOMETRE_PIN)/25; //Variable l'angle du joystick (divise par 25 pour rendre les deplacements du servo plus fluide)
+		//Lit le potentiometre/gyroscope
+		float anglePotentiometre = LitPinEnDegre(INCLINAISON_PIN);
+		ordreProfondeur+=ordre;
+		if(ordreProfondeur<-135) ordreProfondeur = -135;
+		if(ordreProfondeur>135) ordreProfondeur = 135;
+		else if(anglePotentiometre != ordreProfondeur)
+		ordreProfondeur = -anglePotentiometre;
+	}
+	//Lit une PIN et renvoie une valeur en degre
+	float LitPinEnDegre(int pin) {
+		float inclinaisonDegre = analogRead(pin)/DIVIDER_POT_DEGRES;
+		float result= inclinaisonDegre-135;
+		if(result > -2 && result <2)
+		result = 0;
+		return result;
+	}
+	//Au travers du traceur serie, affiche les courbes du joystick et de l'inclinaison de l'avion
+	void AffichageTraceurSerie() {
+		Serial.print(LitPinEnDegre(POTENTIOMETRE_PIN));
+		Serial.print(",");
+		Serial.println(LitPinEnDegre(INCLINAISON_PIN));
+	}
+\end{lstlisting}
+\section{Conclusion}
+	%Veillez à insérer un \hspace{0.5cm} avant votre conclusion si elle n'est pas la première
+	Ce projet nous à appris à travailler en équipe et à nous répartir les tâches, de plus il nous a amené à utiliser des logiciels que nous ne connaissions pas, notamment Gantt Project, le seul logiciel que je connaisse qui requiert le jre-fx et ne fonctionne pas avec le jdk.
+	\begin{flushright}
+		-Ronan
+	\end{flushright}
+	\hspace{0.5cm} Ce projet de commande de vol électrique a été bénéfique du moins personnellement, elle nous a appris à travailler en équipe (de manière plus avancée), à faire des recherches par soi même pour developper de nouvelles capacités (notamment sur le codage) et à s'organiser sur la longueur.\\
+	Ce projet malgré sa difficulté a été éducative et les compétences développées nous resserviront sûrement.
+	\begin{flushright}
+	 	-Anthony
+	\end{flushright}
+\end{document} 
